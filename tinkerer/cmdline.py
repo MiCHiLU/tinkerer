@@ -45,7 +45,13 @@ def build(build_all):
     '''
     # clean build directory
     if build_all and os.path.exists(paths.blog):
-        shutil.rmtree(paths.blog)
+        shutil.rmtree(paths.doctree)
+        for path in os.listdir(paths.html):
+            path = os.path.join(paths.html, path)
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
 
     flags = ["sphinx-build"]
     # silence Sphinx if in quiet mode
